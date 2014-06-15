@@ -5,3 +5,11 @@ Library/*
 
 ProjectSettings/*
 
+*.sln
+
+ios_project/*
+
+Temp/*
+*.csproj
+
+*.unityproj
