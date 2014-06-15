@@ -98,7 +98,7 @@ bool CalculatePosition(Node* BlindNode, Point* center)
     }
     
     
-    if (BlindNode->archor_num >= 3 search_count < MaxSearchIntersectedCount)
+    if (BlindNode->archor_num >= 3 && search_count < MaxSearchIntersectedCount)
     {
         MinMaxCalc(BlindNode->archor_list,BlindNode->archor_num,center);
         return true;
