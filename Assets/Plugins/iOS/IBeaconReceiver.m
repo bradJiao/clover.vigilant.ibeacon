@@ -188,7 +188,7 @@ extern double kalmanfilter_update(double measurement);
             proximity = 3;
         }
         
-        double facc = kalmanfilter_update(beacon.accuracy);
+        double facc = beacon.accuracy;//kalmanfilter_update(beacon.accuracy);
         [data appendFormat:@"%@,%d,%d,%d,%ld,%f;",beacon.proximityUUID.UUIDString,beacon.major.intValue,beacon.minor.intValue,proximity,(long)beacon.rssi,facc];
         
     }
