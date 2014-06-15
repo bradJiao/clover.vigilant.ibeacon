@@ -54,6 +54,7 @@ void MinMaxCalc(ArchorNode* Anchors, int archornum,Point* center);
 bool BelongsToAllBoxes(double x1, double y1, double r1, double x2, double y2, double r2);
 
 
+static int MaxSearchIntersectedCount  = 10;
 /// <summary>
 /// Calculates the position
 /// </summary>
@@ -63,8 +64,9 @@ bool CalculatePosition(Node* BlindNode, Point* center)
 {
     bool AllBoxesIntersected = false;
     
+    int search_count  = 0;
     
-    while (!AllBoxesIntersected)
+    while (!AllBoxesIntersected && search_count < MaxSearchIntersectedCount)
     {
         AllBoxesIntersected = true;
         
@@ -92,10 +94,11 @@ bool CalculatePosition(Node* BlindNode, Point* center)
             }
             
         }
+        search_count ++;
     }
     
     
-    if (BlindNode->archor_num >= 3)
+    if (BlindNode->archor_num >= 3 search_count < MaxSearchIntersectedCount)
     {
         MinMaxCalc(BlindNode->archor_list,BlindNode->archor_num,center);
         return true;

@@ -34,7 +34,7 @@ public struct Beacon
 				accuracy = _accuracy;
 
 				///
-				maxSmoothLength = 10;
+				maxSmoothLength = 5;
 				rssiHistory = null;
 				accHistory = null;
 		BSObject = null;

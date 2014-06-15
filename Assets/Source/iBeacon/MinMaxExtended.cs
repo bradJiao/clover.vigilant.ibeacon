@@ -14,6 +14,7 @@
     /// </summary>
     public class MinMaxExtended : RangeBasedPositioning
     {
+		static int MaxSearchIntersectedCount  = 10;
         #region Methods
         /// <summary>
         /// Calculates the position
@@ -39,9 +40,11 @@
 //                an.range = frss;
 //            }
 
+			int search_count  = 0;
+
             if (!multiHop)
             {
-                while (!AllBoxesIntersected)
+				while (!AllBoxesIntersected  && search_count < MaxSearchIntersectedCount)
                 {
 
                     for (int i = 0; i < BlindNode.Anchors.Count; i++)
@@ -64,8 +67,10 @@
                     }
                     else
                         AllBoxesIntersected = true;
+
+					search_count ++;
                 }
-                if (BlindNode.Anchors.Count >= 3)
+				if (BlindNode.Anchors.Count >= 3 && search_count < MaxSearchIntersectedCount)
                 {
                     center = MinMaxCalc(BlindNode.Anchors, filterMethod, rangingMethod);
                 }

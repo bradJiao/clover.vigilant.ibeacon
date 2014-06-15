@@ -87,12 +87,12 @@ public class iBeaconReceiverExample : MonoBehaviour
 				int i = 0;
 		
 				foreach (var item in mybeacons) {
-						if (item.BSObject == null) {
+						if (item.BSObject == null && item.accuracy <= 0) {
 								continue;
 						}
 						data [i * 3] = item.BSObject.transform.position.x;
 						data [i * 3 + 1] = item.BSObject.transform.position.z;
-						data [i * 3 + 2] = (double)item.range;
+						data [i * 3 + 2] = (double)item.accuracy;
 						i++;
 				}
 				archornum = i;
@@ -120,7 +120,7 @@ public class iBeaconReceiverExample : MonoBehaviour
 				                           item.BSObject.transform.position.x,
 				                           item.BSObject.transform.position.z,
 				                           item.strength,
-				                           (double)item.range);
+				                           (double)item.accuracy);
 						targetNode.Anchors.Add (beaconNode);
 
 				}

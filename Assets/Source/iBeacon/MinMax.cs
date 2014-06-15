@@ -41,6 +41,7 @@
         #endregion Constructors
     }
 
+
     /// <summary>
     /// Min-Max Localization algorithm with simple radio propagation model
     /// </summary>
