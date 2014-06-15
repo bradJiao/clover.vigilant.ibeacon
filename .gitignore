@@ -1,0 +1,7 @@
+
+*.meta
+
+Library/*
+
+ProjectSettings/*
+
