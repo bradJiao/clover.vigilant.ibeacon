@@ -10,6 +10,7 @@ TagManager:
   - bs-1-4
   - target
   - bs-2-1
+  - bs-1-0
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
