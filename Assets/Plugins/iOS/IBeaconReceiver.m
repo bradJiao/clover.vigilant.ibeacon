@@ -143,7 +143,7 @@ didStartMonitoringForRegion:(CLRegion *)region {
         NSLog(@"Exited region: %@", region);
 }
 
-
+extern double kalmanfilter_update(double measurement);
 
 - (void) locationManager:(CLLocationManager *)manager
          didRangeBeacons:(NSArray *)beacons
@@ -187,7 +187,9 @@ didStartMonitoringForRegion:(CLRegion *)region {
         } else if (beacon.proximity == CLProximityImmediate) {
             proximity = 3;
         }
-        [data appendFormat:@"%@,%d,%d,%d,%ld,%f;",beacon.proximityUUID.UUIDString,beacon.major.intValue,beacon.minor.intValue,proximity,(long)beacon.rssi,beacon.accuracy];
+        
+        double facc = kalmanfilter_update(beacon.accuracy);
+        [data appendFormat:@"%@,%d,%d,%d,%ld,%f;",beacon.proximityUUID.UUIDString,beacon.major.intValue,beacon.minor.intValue,proximity,(long)beacon.rssi,facc];
         
     }
     //if (_should_log_debug)
