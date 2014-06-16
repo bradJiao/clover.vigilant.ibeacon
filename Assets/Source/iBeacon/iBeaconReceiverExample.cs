@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
+using Positioning;
+
 public class iBeaconReceiverExample : MonoBehaviour
 {
 		private Vector2 scrolldistance;
@@ -68,16 +70,16 @@ public class iBeaconReceiverExample : MonoBehaviour
 			
 				}
 		}
-	#if UNITY_IOS	
+//#define USE_C_LIB
+	#if USE_C_LIB	
 	[DllImport ("__Internal")]
 	private static extern bool calcPos(double[] data, int archorNum, out double outx,out double outy);
 	#endif
 		private void positioning ()
 		{
-		#if !UNITY_EDITOR
-		#if UNITY_IOS
-				Positioning.Point point = null;
+		Point point = null;
 
+		#if USE_C_LIB
 
 				int archornum = 0;
 				double[] data = new double[mybeacons.Count * 3];
@@ -87,7 +89,7 @@ public class iBeaconReceiverExample : MonoBehaviour
 				int i = 0;
 		
 				foreach (var item in mybeacons) {
-						if (item.BSObject == null && item.accuracy <= 0) {
+						if (item.BSObject == null || item.accuracy <= 0) {
 								continue;
 						}
 						data [i * 3] = item.BSObject.transform.position.x;
@@ -106,17 +108,16 @@ public class iBeaconReceiverExample : MonoBehaviour
 						}
 
 				}
-#endif
 #else
 
 		
-		Positioning.Node targetNode = new Positioning.Node (@"target");
+		Node targetNode = new Node (@"target");
 				foreach (var item in mybeacons) {
-						if (item.BSObject == null) {
+						if (item.BSObject == null || item.accuracy <= 0) {
 								continue;
 						}
-						Positioning.AnchorNode beaconNode = 
-				new Positioning.AnchorNode (item.IDString (),
+						AnchorNode beaconNode = new Positioning.AnchorNode (
+											item.IDString (),
 				                           item.BSObject.transform.position.x,
 				                           item.BSObject.transform.position.z,
 				                           item.strength,
@@ -124,10 +125,10 @@ public class iBeaconReceiverExample : MonoBehaviour
 						targetNode.Anchors.Add (beaconNode);
 
 				}
-				//Positioning.Point point = Positioning.ExtendedTrilateration.CalculatePosition (targetNode, null, null, false);
-				Positioning.Point point = Positioning.MinMaxExtended.CalculatePosition (targetNode, null, null, false);
-				//Positioning.Point point = Positioning.MinMax.CalculatePosition (targetNode, null, null, false);
-//				//Positioning.Point point = Positioning.ClusterTrilateration.CalculatePosition (targetNode, null, null, false);
+				point = ExtendedTrilateration.CalculatePosition (targetNode, null, null, false);
+				//point = Positioning.MinMaxExtended.CalculatePosition (targetNode, null, null, false);
+				//point = Positioning.MinMax.CalculatePosition (targetNode, null, null, false);
+//				//point = Positioning.ClusterTrilateration.CalculatePosition (targetNode, null, null, false);
 
 #endif
 

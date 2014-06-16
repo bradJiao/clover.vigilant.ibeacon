@@ -13,6 +13,8 @@
     /// </summary>
     public class ExtendedTrilateration : RangeBasedPositioning
     {
+
+		static int MaxSearchIntersectedCount  = 10;
         #region Methods
 
         /// <summary>
@@ -43,13 +45,15 @@
 //                an.range = rangingMethod(an.fRSS);
 //            }
 
+			int search_count  = 0;
+
             if (!multihop)
             {
-                if(BlindNode.Anchors.Count >= 3)
+				if(BlindNode.Anchors.Count >= 3)
                 {
                     // This lus will continue with expanding and narrowing the range of the anchors
                     // until all circles cut in one or two points
-                    while (!AllCirclesIntersected)
+					while (!AllCirclesIntersected && search_count < MaxSearchIntersectedCount)
                     {
                         for (int i = 0; i < BlindNode.Anchors.Count; i++)
                         {
@@ -87,6 +91,8 @@
                         {
                             AllCirclesIntersected = true;
                         }
+
+						search_count ++;
                     }
 
                     // Determine crossings

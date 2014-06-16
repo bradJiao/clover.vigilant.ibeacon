@@ -31,7 +31,7 @@ public class Test : MonoBehaviour
 						count --;
 
 						iBeaconReceiver[] receiver = GetComponentsInParent<iBeaconReceiver> ();
-						receiver [0].RangeBeacons (test_beacons [1]);
+						receiver [0].RangeBeacons (test_beacons [2]);
 
 						if (index >= 6) {
 								index = 0;
